@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 //const date = require(__dirname + "/date.js");
 const mongoose = require('mongoose');
 const_ =require("lodash");
+require('dotenv').config();
 
 const app = express();
 
@@ -12,7 +13,9 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
-mongoose.connect('mongodb+srv://admin-luiggy:test123@cluster0.bueqi.mongodb.net/todolistDB', {useNewUrlParser: true, useUnifiedTopology: true});
+
+console.log(process.env.DB_USER);
+mongoose.connect('mongodb+srv://'+ (process.env.DB_USER)+':'+ (process.env.DB_PASS)+ '@cluster0.bueqi.mongodb.net/todolistDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const itemsSchema = new mongoose.Schema({item:{type:String, required:true}});
 
